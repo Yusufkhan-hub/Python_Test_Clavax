@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Books App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body style="background-color:#4DB6AC;">
+<nav class="navbar navbar-light" style="background-color:#FF0033;">
+    <a href="#" class="navbar-brand" style="background-color:#FFCC33;color:#000000;border-width:10px;border-color:#FFCC33;border-style:solid;border-spacing:30px;border-radius: 5px;">Enrolment App</a>
+    <a class="navbar-link btn-lg" href="{% url 'dashboard' %}" style="background-color:#FFCC33;color:#000000;">Home</a>
+    <a href="{% url 'register-admin' %}" class = 'navbar-link btn-lg' style="background-color:#FFCC33;color:#000000;">Admin</a>
+    <a href="{% url 'add-details' %}" class="navbar-link btn-lg" style="background-color:#FFCC33;color:#000000;">Add Student Details </a>
+</nav>
+<br>
+{% block content %}
+<div class="container">
+    {% comment %} {% for book in shelf %} {% endcomment %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-borderless">
+            <thead>
+                <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Student Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Class</th>
+                <th scope="col">Marks%</th>
+                <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for items in items %}            
+                <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{items.student_name}}</td>
+                <td>{{items.email}}</td>
+                <td>{{items.phone_number}}</td>
+                <td>{{items.class_opted}}</td>
+                <td>{{items.marks}}</td>
+                <td><a class="btn btn-primary" href="{% url 'edit-details' items.id %}">Edit</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            <div class="card-footer bg-transparent border-dark">
+                <center>
+                {% comment %} {% for items in items %} {% endcomment %}
+                {% if items.has_previous %}
+                <a href="{% url 'dashboard' %}?page={{items.previous_page_number}}" class="btn btn-info">Previous Page</a>
+                {% endif %}
+                {% if items.has_next %}
+                <a href="{% url 'dashboard' %}?page={{items.next_page_number}}" class="btn btn-info">Next Page</a>
+                {% endif %}
+                {% comment %} {% endfor %} {% endcomment %}
+                </center>
+            </div>
+        </div>
+    </div>
+    {% comment %} {% endfor %} {% endcomment %}
+</div>
+{% endblock %}
+
+</body>
+</html>
+
